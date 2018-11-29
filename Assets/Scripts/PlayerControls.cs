@@ -19,12 +19,35 @@ public class PlayerControls : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		rb.velocity = new Vector2(2, rb.velocity.y);
 		onGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
-		if (Input.GetMouseButtonDown(0)&&onGround)
+		if (Input.GetMouseButtonDown(0))
 		{
-			rb.velocity = new Vector2(rb.velocity.x, 6);
+			Clicked();
+		}
+		if (Input.GetKey(KeyCode.LeftArrow))
+		{ 
+			rb.velocity = new Vector2(-3, rb.velocity.y);
+		}
+		if (Input.GetKey(KeyCode.RightArrow))
+		{ 
+			rb.velocity = new Vector2(3, rb.velocity.y);
+		}
+		if (Input.GetKeyDown("space")&&onGround)
+		{
+			rb.velocity = new Vector2(rb.velocity.x, 10);
+		}
+	}
+	
+	void Clicked()
+	{
+		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+ 
+		RaycastHit hit = new RaycastHit();
+ 
+		if (Physics.Raycast (ray, out hit))
+		{
+			Debug.Log(hit.collider.gameObject.name);
 		}
 	}
 }
